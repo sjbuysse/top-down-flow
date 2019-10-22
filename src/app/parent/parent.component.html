@@ -9,3 +9,9 @@
   <app-child [sandwich]="item.value" (init)="updateSandwichesObject()">
   </app-child>
 </ng-container>
+
+<button (click)="addSandwichToStore()">Add sandwich to store</button>
+<ng-container *ngFor="let sandwich of storeOfSandwiches$ | async">
+  <app-child [sandwich]="sandwich" (init)="updateSandwichesStore()">
+  </app-child>
+</ng-container>
