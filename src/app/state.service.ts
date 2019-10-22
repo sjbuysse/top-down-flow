@@ -7,21 +7,36 @@ import { createDeliciousSandwich, Sandwich } from './sandwich.interface';
 })
 export class StateService {
   arrayOfSandwiches = new BehaviorSubject<Sandwich[]>([]);
+  objectOfSandwiches = new BehaviorSubject<{ [key: string]: Sandwich }>({});
 
   constructor() {
   }
 
-  addSandwich() {
+  addSandwichToArray() {
     this.arrayOfSandwiches.next([
       ...this.arrayOfSandwiches.value,
       {...createDeliciousSandwich()}
     ]);
   }
 
-  updateSandwiches() {
+  updateSandwichesArray() {
     this.arrayOfSandwiches.next([
       ...this.arrayOfSandwiches.value,
     ]);
+  }
+
+  addSandwichToObject() {
+    const newSandwich = createDeliciousSandwich();
+    this.objectOfSandwiches.next({
+      ...this.objectOfSandwiches.value,
+      [newSandwich.id]: newSandwich
+    });
+  }
+
+  updateSandwichesObject() {
+    this.objectOfSandwiches.next({
+      ...this.objectOfSandwiches.value
+    });
   }
 }
 

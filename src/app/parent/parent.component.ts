@@ -7,7 +7,8 @@ import { StateService } from '../state.service';
   styleUrls: ['./parent.component.scss']
 })
 export class ParentComponent implements OnInit {
-  sandwiches$ = this.stateService.arrayOfSandwiches;
+  arrayOfSandwiches$ = this.stateService.arrayOfSandwiches;
+  objectOfSandwiches$ = this.stateService.objectOfSandwiches;
 
   constructor(private stateService: StateService) {
   }
@@ -15,11 +16,19 @@ export class ParentComponent implements OnInit {
   ngOnInit() {
   }
 
-  addSandwich() {
-    this.stateService.addSandwich();
+  addSandwichToArray() {
+    this.stateService.addSandwichToArray();
   }
 
-  updateSandwiches() {
-    this.stateService.updateSandwiches();
+  updateSandwichesArray() {
+    this.stateService.updateSandwichesArray();
+  }
+
+  addSandwichToObject() {
+    this.stateService.addSandwichToObject();
+  }
+
+  updateSandwichesObject() {
+    this.stateService.updateSandwichesObject();
   }
 }

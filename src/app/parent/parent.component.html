@@ -1,5 +1,11 @@
-<button (click)="addSandwich()">Add sandwich</button>
-<ng-container *ngFor="let sandwich of sandwiches$ | async">
-  <app-child [sandwich]="sandwich" (init)="updateSandwiches()">
+<button (click)="addSandwichToArray()">Add sandwich to array</button>
+<ng-container *ngFor="let sandwich of arrayOfSandwiches$ | async">
+  <app-child [sandwich]="sandwich" (init)="updateSandwichesArray()">
+  </app-child>
+</ng-container>
+
+<button (click)="addSandwichToObject()">Add sandwich to object</button>
+<ng-container *ngFor="let item of objectOfSandwiches$ | async | keyvalue">
+  <app-child [sandwich]="item.value" (init)="updateSandwichesObject()">
   </app-child>
 </ng-container>
