@@ -18,7 +18,7 @@ export class StateService {
     ]);
   }
 
-  copySandwiches() {
+  updateSandwiches() {
     this.arrayOfSandwiches.next([
       ...this.arrayOfSandwiches.value,
     ]);

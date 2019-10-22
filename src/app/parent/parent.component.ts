@@ -19,7 +19,7 @@ export class ParentComponent implements OnInit {
     this.stateService.addSandwich();
   }
 
-  copySandwiches() {
-    this.stateService.copySandwiches();
+  updateSandwiches() {
+    this.stateService.updateSandwiches();
   }
 }

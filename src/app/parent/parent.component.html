@@ -1,5 +1,5 @@
 <button (click)="addSandwich()">Add sandwich</button>
 <ng-container *ngFor="let sandwich of sandwiches$ | async">
-  <app-child [sandwich]="sandwich" (init)="copySandwiches()">
+  <app-child [sandwich]="sandwich" (init)="updateSandwiches()">
   </app-child>
 </ng-container>
