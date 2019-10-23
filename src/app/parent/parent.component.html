@@ -10,8 +10,14 @@
   </app-child>
 </ng-container>
 
-<button (click)="addSandwichToStore()">Add sandwich to store</button>
-<ng-container *ngFor="let sandwich of storeOfSandwiches$ | async">
-  <app-child [sandwich]="sandwich" (init)="updateSandwichesStore()">
+<button (click)="addSandwichToArrayInStore()">Add sandwich to array in store</button>
+<ng-container *ngFor="let sandwich of storeOfSandwichesArray$ | async">
+  <app-child [sandwich]="sandwich" (init)="updateSandwichesArrayInStore()">
+  </app-child>
+</ng-container>
+
+<button (click)="addSandwichToObjectInStore()">Add sandwich to object in store</button>
+<ng-container *ngFor="let item of storeOfSandwichesObject$ | async | keyvalue">
+  <app-child [sandwich]="item.value" (init)="updateSandwichesObjectInStore()">
   </app-child>
 </ng-container>

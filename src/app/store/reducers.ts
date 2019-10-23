@@ -1,17 +1,28 @@
 import { createReducer, on } from '@ngrx/store';
-import { addSandwich, updateSandwiches } from './actions';
+import { addSandwichToArray, addSandwichToObject, updateSandwichesArray, updateSandwichesObject } from './actions';
 import { createDeliciousSandwich } from '../sandwich.interface';
+import { initialDataState } from './state';
 
-export const initialState = {sandwiches: []};
 
-const _sandwichReducer = createReducer(initialState,
-  on(addSandwich, state => ({
+const _sandwichReducer = createReducer(initialDataState,
+  on(addSandwichToArray, state => ({
     ...state,
-    sandwiches: [...state.sandwiches, {...createDeliciousSandwich()}]
+    sandwichesArray: [...state.sandwichesArray, {...createDeliciousSandwich()}]
   })),
-  on(updateSandwiches, state => ({
+  on(updateSandwichesArray, state => ({
     ...state,
-    sandwiches: [...state.sandwiches]
+    sandwichesArray: [...state.sandwichesArray]
+  })),
+  on(addSandwichToObject, state => {
+    const newSandwich = {...createDeliciousSandwich()};
+    return {
+      ...state,
+      sandwichesObject: {...state.sandwichesObject, [newSandwich.id]: newSandwich}
+    };
+  }),
+  on(updateSandwichesObject, state => ({
+    ...state,
+    sandwichesObject: {...state.sandwichesObject}
   })),
 );
 

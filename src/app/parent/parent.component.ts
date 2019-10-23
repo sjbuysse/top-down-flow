@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { StateService } from '../state.service';
 import { select, Store } from '@ngrx/store';
 import { Sandwich } from '../sandwich.interface';
-import { map } from 'rxjs/operators';
-import { addSandwich, updateSandwiches } from '../store/actions';
-import { selectSandwiches } from '../store/selectors';
+import { addSandwichToArray, addSandwichToObject, updateSandwichesArray, updateSandwichesObject } from '../store/actions';
+import { selectSandwichesArray, selectSandwichesObject } from '../store/selectors';
+import { DataState } from '../store/state';
 
 @Component({
   selector: 'app-parent',
@@ -14,9 +14,10 @@ import { selectSandwiches } from '../store/selectors';
 export class ParentComponent implements OnInit {
   arrayOfSandwiches$ = this.stateService.arrayOfSandwiches;
   objectOfSandwiches$ = this.stateService.objectOfSandwiches;
-  storeOfSandwiches$ = this.store.pipe(select(selectSandwiches));
+  storeOfSandwichesArray$ = this.store.pipe(select(selectSandwichesArray));
+  storeOfSandwichesObject$ = this.store.pipe(select(selectSandwichesObject));
 
-  constructor(private stateService: StateService, private store: Store<{ data: { sandwiches: Sandwich[] } }>) {
+  constructor(private stateService: StateService, private store: Store<{ data: DataState }>) {
   }
 
   ngOnInit() {
@@ -38,11 +39,19 @@ export class ParentComponent implements OnInit {
     this.stateService.updateSandwichesObject();
   }
 
-  addSandwichToStore() {
-    this.store.dispatch(addSandwich());
+  addSandwichToArrayInStore() {
+    this.store.dispatch(addSandwichToArray());
   }
 
-  updateSandwichesStore() {
-    this.store.dispatch(updateSandwiches());
+  updateSandwichesArrayInStore() {
+    this.store.dispatch(updateSandwichesArray());
+  }
+
+  addSandwichToObjectInStore() {
+    this.store.dispatch(addSandwichToObject());
+  }
+
+  updateSandwichesObjectInStore() {
+    this.store.dispatch(updateSandwichesObject());
   }
 }
