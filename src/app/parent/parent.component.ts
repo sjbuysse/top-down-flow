@@ -5,6 +5,7 @@ import { Sandwich } from '../sandwich.interface';
 import { addSandwichToArray, addSandwichToObject, updateSandwichesArray, updateSandwichesObject } from '../store/actions';
 import { selectSandwichesArray, selectSandwichesObject } from '../store/selectors';
 import { DataState } from '../store/state';
+import { distinctUntilChanged, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-parent',
@@ -12,10 +13,16 @@ import { DataState } from '../store/state';
   styleUrls: ['./parent.component.scss']
 })
 export class ParentComponent implements OnInit {
-  arrayOfSandwiches$ = this.stateService.arrayOfSandwiches;
-  objectOfSandwiches$ = this.stateService.objectOfSandwiches;
-  storeOfSandwichesArray$ = this.store.pipe(select(selectSandwichesArray));
-  storeOfSandwichesObject$ = this.store.pipe(select(selectSandwichesObject));
+  arrayOfSandwiches$ = this.stateService.arrayOfSandwiches.pipe(distinctUntilChanged(areArraysEqual));
+  objectOfSandwiches$ = this.stateService.objectOfSandwiches.pipe(distinctUntilChanged(areObjectsEqual));
+  storeOfSandwichesArray$ = this.store.pipe(
+    select(selectSandwichesArray),
+    distinctUntilChanged(areArraysEqual),
+  );
+  storeOfSandwichesObject$ = this.store.pipe(
+    select(selectSandwichesObject),
+    distinctUntilChanged(areObjectsEqual),
+  );
 
   constructor(private stateService: StateService, private store: Store<{ data: DataState }>) {
   }
@@ -55,3 +62,9 @@ export class ParentComponent implements OnInit {
     this.store.dispatch(updateSandwichesObject());
   }
 }
+
+const areArraysEqual = (oldArray: Sandwich[], newArray: Sandwich[]) =>
+  oldArray.toString() === newArray.toString();
+
+const areObjectsEqual = (oldObject: { [key: string]: Sandwich }, newObject: { [key: string]: Sandwich }) =>
+  JSON.stringify(oldObject) === JSON.stringify(newObject);
